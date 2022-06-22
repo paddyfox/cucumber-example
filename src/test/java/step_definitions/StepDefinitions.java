@@ -57,6 +57,7 @@ public class StepDefinitions {
         switch (website) {
             case "www.amazon.co.uk":
                 amazonHomePage.amazonWebsiteIsDisplayed();
+                amazonHomePage.acceptCookies();
                 break;
             case "www.currys.co.uk":
                 //TODO: Do stuff here
@@ -68,15 +69,22 @@ public class StepDefinitions {
 
     @When("they search for item: {string} on {string}")
     public StepDefinitions search_for_item_on_website(String item, String websiteName) {
-        item = getItemName(item);
-
         if (websiteName.contains("amazon")) {
-            amazonHomePage.searchForItem(getItemName(item));
+            amazonHomePage.searchForItem(item);
             amazonHomePage.clickSearch();
 
-            assertTrue("Unable to find " + item + "in list: " + amazonHomePage.getAllSearchResults(),
+            assertTrue("Unable to find " + item + " in list: " + amazonHomePage.getAllSearchResults(),
                     amazonHomePage.getAllSearchResults().contains(item));
-            amazonHomePage.selectFirstSearchResult();
+            switch (item) {
+                case "The Doggfather: The Times, Trials and Hardcore Truths of Snoop Dogg":
+                    amazonHomePage.selectFirstResultForSnoopDogg();
+                    break;
+                case "Echo Dot (4th generation) - Charcoal with a Fire TV Stick 4K":
+                    amazonHomePage.selectFirstResultForEchoDot();
+                    break;
+                default:
+                    throw new IllegalArgumentException("No behaviour defined for: " + item);
+            }
         }
         else if (websiteName.contains("currys")) {
             //TODO: Do stuff here
@@ -89,13 +97,5 @@ public class StepDefinitions {
     public StepDefinitions less_than_budget(float amount) {
         //TODO: Do stuff here
         return null;
-    }
-
-    private String getItemName(String item) {
-        if ("The Doggfather CD album by Snoop Dogg".equalsIgnoreCase(item)) {
-            item = "Tha Doggfather";
-        }
-        //TODO: Do stuff here
-        return item;
     }
 }
