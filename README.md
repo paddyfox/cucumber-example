@@ -13,7 +13,7 @@ Have Java 11 or newer installed.
 4. Create new smoke tests of your own choosing to extend the suite eg purchasing clothing.
 
 ### Run tests locally
-Right click the feature file and select "Run" or "Debug" to start the test.
+Right-click the feature file and select "Run" or "Debug" to start the test.
 
 ### Run tests through the commandline
 To run the test, use your CI or point Maven to the project and use the goals:
