@@ -50,7 +50,7 @@ public class StepDefinitions {
         DriverManager.clearDriver();
     }
 
-    @Given("the client opens {string}")
+    @Given("the customer goes shopping on {string}")
     public StepDefinitions open_start_page(String website) {
         Site.goToURL("https://" + website);
 
@@ -73,18 +73,7 @@ public class StepDefinitions {
             amazonHomePage.searchForItem(item);
             amazonHomePage.clickSearch();
 
-            assertTrue("Unable to find " + item + " in list: " + amazonHomePage.getAllSearchResults(),
-                    amazonHomePage.getAllSearchResults().contains(item));
-            switch (item) {
-                case "The Doggfather: The Times, Trials and Hardcore Truths of Snoop Dogg":
-                    amazonHomePage.selectFirstResultForSnoopDogg();
-                    break;
-                case "Echo Dot (4th generation) - Charcoal with a Fire TV Stick 4K":
-                    amazonHomePage.selectFirstResultForEchoDot();
-                    break;
-                default:
-                    throw new IllegalArgumentException("No behaviour defined for: " + item);
-            }
+            assertTrue("Unable to find " + item + " in list: " + amazonHomePage.getAllSearchResults(), amazonHomePage.getAllSearchResults().contains(item));
         }
         else if (websiteName.contains("currys")) {
             //TODO: Do stuff here

@@ -1,6 +1,8 @@
 package uk.kainos.seleniumframework.site;
 
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import uk.kainos.seleniumframework.driver.DriverManager;
@@ -13,7 +15,7 @@ import uk.kainos.seleniumframework.properties.PropertyLoader;
  */
 public class Site {
 
-    private static final long DEFAULT_WAIT_TIMEOUT = 10;
+    private static final long DEFAULT_WAIT_TIMEOUT = 15;
 
     /**
      * Effectively a getter for the web driver wait object. Just makes code more readable to not have "get" at the front.
@@ -47,6 +49,10 @@ public class Site {
         }
 
         return webDriverWait(timeoutInSeconds);
+    }
+
+    public static void waitForElementToAppear(WebElement element) {
+        webDriverWait().until(ExpectedConditions.visibilityOf(element));
     }
 
     public static boolean verifyPageTitle(String actual, String expected) {

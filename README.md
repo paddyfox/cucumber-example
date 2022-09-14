@@ -1,6 +1,7 @@
 # cucumber-example
 This project is a Cucumber Selenium UI automation test example framework for teaching automated testing. 
-It is written in Java with Cucumber BDD, TestNG and produces reports of test results.
+It is written in Java using Cucumber BDD, TestNG and produces reports of test results.
+It is integrated with BrowserStack to run tests on remote browsers and devices.
 
 ## Getting Started
 Have the Cucumber & TestNG plugin installed in IntelliJ.
@@ -8,14 +9,14 @@ Have Java 11 or newer installed.
 
 ## Tasks
 1. Implement the step definitions to get the smoke test feature working.
-2. Execute the tests against another browser other than Chrome.
-3. Get the four smoke tests to run all at once in parallel.
-4. Create new smoke tests of your own choosing to extend the suite eg purchasing clothing.
+2. Execute the tests against another browser locally other than the default: Chrome.
+3. Get all four smoke tests to run all at once in parallel.
+4. Create new smoke tests of your own choosing to extend the suite e.g. purchasing clothing.
 
-### Run tests locally
+### To run tests locally in the IDE
 Right-click the feature file and select "Run" or "Debug" to start the test.
 
-### Run tests through the commandline
+### To run tests through the commandline
 To run the test, use your CI or point Maven to the project and use the goals:
 ```
 mvn clean test -P smoke
@@ -26,9 +27,9 @@ To run a specific test, use the Cucumber filter:
 mvn clean test -Dcucumber.filter.tags=@smk1
 ```
 
-### Run tests in parallel
+### To run tests in parallel
 By default, all tests run in parallel but if you wish to run a test in series mode then tag the test or scenario with the annotation: `@serial`  
-To change the amount of tests which run in parallel, change the value of `data-provider-thread-count="5"` in the testng.xml file i.e. `regression.xml`
+To change the amount of tests which run in parallel, change the value of `data-provider-thread-count="5"` in the testng.xml file i.e. `smoke.xml`
 
 ##### Appium
 When writing tests using this framework, you can easily leverage these tests to run against an Appium grid with the following settings:
@@ -97,7 +98,7 @@ The properties declared here can be overriden, however, if specified as a system
 For example, if you declare the following property in your **dev1.properties** file:
 
 ```
-browser.type=FirefoxLocal
+browser.type=EdgeLocal
 ```
 
 You also pass the following at runtime:
@@ -130,7 +131,7 @@ To enable cucumber reports change `cucumber.publish.enabled=false` to `cucumber.
 
 ## Some Selenium best practices:
 * Don't use Selenium to cover tests which are better placed at unit or integration level 
-* Be familiar with and use the ageObjects pattern
+* Be familiar with and use the pageObjects pattern
 * Preferred web element selector order preference: id > name > css > xpath 
-* Avoid Thread.sleep prefer explicit waits such as: FluentWait or WebDriverWait
+* Avoid Thread.sleep, prefer explicit waits such as: FluentWait or WebDriverWait
 * Use relative URLs
