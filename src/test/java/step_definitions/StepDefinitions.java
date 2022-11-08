@@ -52,6 +52,7 @@ public class StepDefinitions {
 
     @Given("the customer goes shopping on {string}")
     public StepDefinitions open_start_page(String website) {
+        driver.manage().deleteAllCookies();
         Site.goToURL("https://" + website);
 
         switch (website) {
@@ -60,7 +61,7 @@ public class StepDefinitions {
                 amazonHomePage.acceptCookies();
                 break;
             case "www.currys.co.uk":
-                //TODO: Do stuff here
+                break;
             default:
                 throw new IllegalArgumentException("No behaviour defined for: " + website);
         }
@@ -82,7 +83,7 @@ public class StepDefinitions {
         return this;
     }
 
-    @And("it is less than their maximum budget of {float}")
+    @And("if it is less than their maximum budget of {float}")
     public StepDefinitions less_than_budget(float amount) {
         //TODO: Do stuff here
         return null;

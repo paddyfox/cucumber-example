@@ -10,12 +10,19 @@ import java.util.stream.Collectors;
 
 public class AmazonHomePage extends Site {
 
+    @FindBy(id = "nav-logo") private WebElement amazonLogo;
+    @FindBy(id = "sp-cc-accept") private WebElement accpetCookiesButton;
     @FindBy(id = "twotabsearchtextbox") private WebElement searchBar;
     @FindBy(css = "#nav-search-submit-text > input") private WebElement searchButton;
     @FindBy(tagName = "h2") private List<WebElement> searchResults;
 
     public void amazonWebsiteIsDisplayed() {
         waitForElementToAppear(amazonLogo);
+    }
+
+    public void acceptCookies() {
+        waitForElementToAppear(accpetCookiesButton);
+        accpetCookiesButton.click();
     }
 
     public void searchForItem(String itemName) {

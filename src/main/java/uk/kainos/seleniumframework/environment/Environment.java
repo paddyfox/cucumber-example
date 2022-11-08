@@ -21,6 +21,7 @@ public class Environment {
     }
 
     public static Boolean executingInBrowserstack() {
-        return Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("Remote");
+        return Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("Remote")
+                || Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("AppiumMobile");
     }
 }

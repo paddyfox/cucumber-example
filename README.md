@@ -19,7 +19,7 @@ Right-click the feature file and select "Run" or "Debug" to start the test.
 ### To run tests through the commandline
 To run the test, use your CI or point Maven to the project and use the goals:
 ```
-mvn clean test -P smoke
+mvn clean test -Psmoke
 ```
 
 To run a specific test, use the Cucumber filter:

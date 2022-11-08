@@ -30,6 +30,7 @@ public class BaseRemoteDriver {
         }
         browserstackOptions.put("projectName", projectName);
         browserstackOptions.put("buildName", projectName + " " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        browserstackOptions.put("sessionName", System.getProperty("user.name"));
         return browserstackOptions;
     }
 
