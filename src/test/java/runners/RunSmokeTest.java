@@ -12,10 +12,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import uk.kainos.seleniumframework.driver.DriverManager;
-
 import java.util.Arrays;
 import java.util.function.Predicate;
+
+import pfox.seleniumframework.driver.DriverManager;
 
 @CucumberOptions(
         features = "src/test/resources/features",

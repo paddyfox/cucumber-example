@@ -1,49 +1,63 @@
 package step_definitions;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import uk.kainos.seleniumframework.driver.DriverManager;
-import uk.kainos.seleniumframework.environment.Environment;
-import uk.kainos.seleniumframework.log.Log;
-import uk.kainos.seleniumframework.site.Site;
-import uk.kainos.seleniumframework.site.pageobjects.AmazonHomePage;
-
 import java.util.UUID;
+
+import pfox.seleniumframework.driver.DriverManager;
+import pfox.seleniumframework.environment.Environment;
+import pfox.seleniumframework.log.Log;
+import pfox.seleniumframework.site.Site;
+import pfox.seleniumframework.site.pageobjects.AmazonHomePage;
+import pfox.seleniumframework.testDataHelpers.BrowserStackHelper;
 
 import static org.testng.AssertJUnit.assertTrue;
 
-import static uk.kainos.seleniumframework.driver.DriverManager.getDriver;
+import static pfox.seleniumframework.driver.DriverManager.getDriver;
 
-public class StepDefinitions {
+public class StepDefinitions extends Site {
 
     WebDriver driver = getDriver();
     AmazonHomePage amazonHomePage = PageFactory.initElements(driver, AmazonHomePage.class);
 
+    @Before
+    public void setup(Scenario scenario) {
+        DriverManager.getDriver().manage().deleteAllCookies();
+        if (Environment.executingInBrowserstack()) {
+            Log.Info("SESSION ID: " + getBrowserstackSessionID());
+            DriverManager.getDriver().manage().window().maximize();
+
+            String path = scenario.getUri().getPath();
+            String feature = path.substring(path.lastIndexOf("/") + 1);
+            int line = scenario.getLine();
+
+            BrowserStackHelper.setSessionName(String.format("%s - %s:%s", scenario.getName(), feature, line));
+        }
+    }
+
     @After
     public void clearDown(Scenario scenario) {
-        if (scenario.isFailed() || scenario.getStatus().name().contains("UNDEFINED")) {
-            Log.Error("TEST FAILED!!");
-            final byte[] screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+        //TODO: Attach screenshot of each failed test
+        if (scenario.isFailed()) {
+            final byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot, "image/png", String.valueOf(scenario) + UUID.randomUUID());
             if (Environment.executingInBrowserstack()) {
-                Log.Error("URL FOR FAILED TEST WAS: " + getDriver().getCurrentUrl());
-                ((JavascriptExecutor) getDriver()).executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"failed\"}}");
+                BrowserStackHelper.failTest(getBrowserstackSessionID(), DriverManager.getDriver().getCurrentUrl(), scenario);
             }
         }
         else {
-            Log.Info("TEST PASSED :)");
             if (Environment.executingInBrowserstack()) {
-                ((JavascriptExecutor) getDriver()).executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"passed\"}}");
+                BrowserStackHelper.passTest();
             }
         }
         Site.closeWindow();
