@@ -21,16 +21,13 @@ public class Environment {
     }
 
     public static Boolean executingInBrowserstack() {
-        return executingInJenkins() || Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("Remote");
+        return executingInJenkins()
+                || Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("Remote")
+                || Objects.requireNonNull(PropertyLoader.getProperty(CommonProperties.BROWSER_TYPE)).contains("AppiumMobile");
     }
 
     public static Boolean executingInJenkins() {
         String JenkinsUrl = System.getenv("JENKINS_URL");
         return !isNullOrEmpty(JenkinsUrl);
-    }
-
-    public static Boolean executingWithLegacyUsers() {
-        String user = System.getProperty("user.name");
-        return user.contains("pfox");
     }
 }

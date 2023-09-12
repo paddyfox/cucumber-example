@@ -2,7 +2,7 @@ package pfox.seleniumframework.properties;
 
 public class PropertiesFileConfig {
 
-    private String fileName;
+    private final String fileName;
 
     public PropertiesFileConfig(String fileName) {
         this.fileName = fileName;

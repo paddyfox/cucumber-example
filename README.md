@@ -1,44 +1,59 @@
 # cucumber-example
-This project is a Cucumber Selenium UI automation test example framework for teaching automated testing. 
+
+This project is a Cucumber Selenium UI automation test example framework for teaching automated testing.
 It is written in Java using Cucumber BDD, TestNG and produces reports of test results.
 It is integrated with BrowserStack to run tests on remote browsers and devices.
 
 ## Getting Started
-Have the Cucumber & TestNG plugin installed in IntelliJ.
+
+Have the Cucumber for Java, Gherkin & TestNG plugin installed in IntelliJ.
 Have Java 11 or newer installed.
+Set Project Settings Structure and SDK to: 11
 
 ## Tasks
+
 1. Implement the step definitions to get the smoke test feature working.
 2. Execute the tests against another browser locally other than the default: Chrome.
 3. Get all four smoke tests to run all at once in parallel.
 4. Create new smoke tests of your own choosing to extend the suite e.g. purchasing clothing.
 
 ### To run tests locally in the IDE
+
 Right-click the feature file and select "Run" or "Debug" to start the test.
 
 ### To run tests through the commandline
+
 To run the test, use your CI or point Maven to the project and use the goals:
+
 ```
 mvn clean test -Psmoke
 ```
 
 To run a specific test, use the Cucumber filter:
+
 ```
 mvn clean test -Dcucumber.filter.tags=@smk1
 ```
 
 ### To run tests in parallel
-By default, all tests run in parallel but if you wish to run a test in series mode then tag the test or scenario with the annotation: `@serial`  
-To change the amount of tests which run in parallel, change the value of `data-provider-thread-count="5"` in the testng.xml file i.e. `smoke.xml`
+
+By default, all tests run in parallel but if you wish to run a test in series mode then tag the test or scenario with
+the annotation: `@serial`  
+To change the amount of tests which run in parallel, change the value of `data-provider-thread-count="5"` in the
+testng.xml file i.e. `smoke.xml`
 
 ##### Appium
-When writing tests using this framework, you can easily leverage these tests to run against an Appium grid with the following settings:
 
-| Browser type                | System property value              |
-|:----------------------------|:-----------------------------------|
-| Appium Mobile               | AppiumMobile                       |
+When writing tests using this framework, you can easily leverage these tests to run against an Appium grid with the
+following settings:
 
-You can set Appium properties using the following to create a request (for capability values information, see http://appium.io/docs/en/writing-running-appium/caps/) :
+| Browser type  | System property value |
+|:--------------|:----------------------|
+| Appium Mobile | AppiumMobile          |
+
+You can set Appium properties using the following to create a request (for capability values information,
+see http://appium.io/docs/en/writing-running-appium/caps/) :
+
 ```
 - appium.browser.name
 - appium.device.name
@@ -48,13 +63,14 @@ You can set Appium properties using the following to create a request (for capab
 
 There is a special pre-set Appium driver for WinAppDriver that can be used for Windows desktop testing by using:
 
-| Browser type                | System property value              |
-|:----------------------------|:-----------------------------------|
-|Windows Driver (WinAppDriver)| AppiumWindowsTenRemote             |
+| Browser type                  | System property value  |
+|:------------------------------|:-----------------------|
+| Windows Driver (WinAppDriver) | AppiumWindowsTenRemote |
 
 For more Appium driver capabilities information, see: http://appium.io/docs/en/writing-running-appium/caps/
 
 ##### Executing tests on a Selenium Grid
+
 To point your tests to a Selenium grid, at runtime or through VM options in your IDE, pass the following property:
 
 ```
@@ -62,6 +78,7 @@ To point your tests to a Selenium grid, at runtime or through VM options in your
 ```
 
 ## Grid Test Execution
+
 When running tests on a remote grid, you must specify a "Remote" type browser, e.g. ChromeRemote:
 
 ```
@@ -69,6 +86,7 @@ When running tests on a remote grid, you must specify a "Remote" type browser, e
 ```
 
 ##### Executing test on Browserstack
+
 To point your tests to Browserstack at runtime or through VM options in your IDE, pass the following properties:
 
 ```
@@ -82,18 +100,20 @@ To override Browserstack logging levels from their default to turning all logs o
 -Dbrowserstack.logging=OFF
 ```
 
-To override Browserstack logging levels from their default to turning all logs on and at error level, pass the following property:
+To override Browserstack logging levels from their default to turning all logs on and at error level, pass the following
+property:
 
 ```
 -Dbrowserstack.logging=ON
 ```
 
-##  Properties
+## Properties
+
 Properties are retrieved by default from a file called **dev1.properties**, which should be located under:
 
 src > main > resources > properties
 
-The properties declared here can be overriden, however, if specified as a system property at runtime.
+The properties declared here can be overridden, however, if specified as a system property at runtime.
 
 For example, if you declare the following property in your **dev1.properties** file:
 
@@ -107,31 +127,34 @@ You also pass the following at runtime:
 -Dbrowser.type=EdgeLocal
 ```
 
-##  Logging
+## Logging
+
 Logging can be easily added to tests by using the static methods from the Log class.
 
 Available logging levels are:
 
-|Logging Level|Method                                       |
-|:------------|:--------------------------------------------|
-|Info         |Log.Info("This is an info level message");   |
-|Warn         |Log.Warn("This is a warning level message"); |
-|Error        |Log.Info("This is an error level message");  |
-|Debug        |Log.Info("This is a debug level message");   |
+| Logging Level | Method                                       |
+|:--------------|:---------------------------------------------|
+| Info          | Log.Info("This is an info level message");   |
+| Warn          | Log.Warn("This is a warning level message"); |
+| Error         | Log.Info("This is an error level message");  |
+| Debug         | Log.Info("This is a debug level message");   |
 
 Cucumber reports can be published to Cucumber online for viewing upto 24 hours later at which they will be destroyed.
-To enable cucumber reports change `cucumber.publish.enabled=false` to `cucumber.publish.enabled=true` in src/test/resources/cucumber.properties.
-
+To enable cucumber reports change `cucumber.publish.enabled=false` to `cucumber.publish.enabled=true` in
+src/test/resources/cucumber.properties.
 
 ## Built With
+
 * [Selenium](https://github.com/SeleniumHQ/selenium) - Browser automation framework
 * [Maven](https://maven.apache.org/) - Dependency management
 * [TestNG](https://github.com/cbeust/testng) - Testing framework
 * [WebDriverManager](https://github.com/bonigarcia/webdrivermanager) - Local webdriver binary management
 
 ## Some Selenium best practices:
-* Don't use Selenium to cover tests which are better placed at unit or integration level 
+
+* Don't use Selenium to cover tests which are better placed at unit or integration level
 * Be familiar with and use the pageObjects pattern
-* Preferred web element selector order preference: id > name > css > xpath 
-* Avoid Thread.sleep, prefer explicit waits such as: FluentWait or WebDriverWait
+* Preferred web element selector order preference: id > name > css > xpath
+* Avoid `Thread.sleep()`, prefer explicit waits such as: FluentWait or WebDriverWait
 * Use relative URLs
