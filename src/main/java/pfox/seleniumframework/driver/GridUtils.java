@@ -3,16 +3,26 @@ package pfox.seleniumframework.driver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import pfox.seleniumframework.environment.Environment;
 import pfox.seleniumframework.log.Log;
-import pfox.seleniumframework.properties.BrowserstackProperties;
 import pfox.seleniumframework.properties.CommonProperties;
 import pfox.seleniumframework.properties.PropertyLoader;
+
+import static pfox.seleniumframework.properties.BrowserstackProperties.BROWSERSTACK_ACCESS_KEY;
+import static pfox.seleniumframework.properties.BrowserstackProperties.BROWSERSTACK_USERNAME;
 
 public class GridUtils {
 
     public static URL getSeleniumGridURL() {
-        String username = PropertyLoader.getProperty(BrowserstackProperties.BROWSERSTACK_USERNAME);
-        String accessKey = PropertyLoader.getProperty(BrowserstackProperties.BROWSERSTACK_ACCESS_KEY);
+        String username;
+        String accessKey;
+        if (Environment.executingInBrowserstack()) {
+            username = System.getenv("bsUserName");
+            accessKey = System.getenv("bsPassword");
+        } else {
+            username = PropertyLoader.getProperty(BROWSERSTACK_USERNAME);
+            accessKey = PropertyLoader.getProperty(BROWSERSTACK_ACCESS_KEY);
+        }
 
         //Presumed Browserstack request
         if (username != null || accessKey != null) {
@@ -39,7 +49,7 @@ public class GridUtils {
             Log.Info("Loading driver with grid url of " + seleniumGridUrl);
             return new URL(seleniumGridUrl);
         } catch (MalformedURLException e) {
-            throw new DriverCreationException("Unable create a seleniumframework grid url from: " + seleniumGridUrl, e);
+            throw new DriverCreationException("Unable create a Selenium Framework grid url from: " + seleniumGridUrl, e);
         }
     }
 

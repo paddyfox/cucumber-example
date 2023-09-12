@@ -3,6 +3,7 @@ package pfox.seleniumframework.properties;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class PropertyLoader {
      * Tries to look up a property using System.getProperty() as a priority and then from any properties files that have been registered
      * with this PropertyLoader.
      * <p>
-     * By default the properties file <strong>properties/dev1.properties</strong> is registered.
+     * By default, the properties file <strong>properties/dev1.properties</strong> is registered.
      *
      * @param propertyKey
      * @return the property relating to the propertyKey or null if nothing was found
@@ -66,7 +67,7 @@ public class PropertyLoader {
 
                 return null;
             }
-            Log.Debug("Loaded resource from " + PropertyLoader.class.getClassLoader().getResource(config.getFileName()).getPath());
+            Log.Debug("Loaded resource from " + Objects.requireNonNull(PropertyLoader.class.getClassLoader().getResource(config.getFileName())).getPath());
             properties.load(inputStream);
 
             return properties.getProperty(propertyKey);

@@ -7,6 +7,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -47,17 +48,18 @@ public class StepDefinitions extends Site {
 
     @After
     public void clearDown(Scenario scenario) {
-        //TODO: Attach screenshot of each failed test
-        if (scenario.isFailed()) {
-            final byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+        if (scenario.isFailed() || scenario.getStatus().name().contains("UNDEFINED")) {
+            Log.Error("TEST FAILED!!");
+            final byte [] screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot, "image/png", String.valueOf(scenario) + UUID.randomUUID());
             if (Environment.executingInBrowserstack()) {
-                BrowserStackHelper.failTest(getBrowserstackSessionID(), DriverManager.getDriver().getCurrentUrl(), scenario);
+                Log.Error("URL FOR FAILED TEST WAS: " + getDriver().getCurrentUrl());
+                ((JavascriptExecutor) getDriver()).executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"failed\"}}");
             }
-        }
-        else {
+        } else {
+            Log.Info("TEST PASSED :)");
             if (Environment.executingInBrowserstack()) {
-                BrowserStackHelper.passTest();
+                ((JavascriptExecutor) getDriver()).executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"passed\"}}");
             }
         }
         Site.closeWindow();

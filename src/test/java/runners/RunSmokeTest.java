@@ -7,15 +7,15 @@ import io.cucumber.testng.Pickle;
 import io.cucumber.testng.PickleWrapper;
 import io.cucumber.testng.TestNGCucumberRunner;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 import pfox.seleniumframework.driver.DriverManager;
+import pfox.seleniumframework.environment.Environment;
+import pfox.seleniumframework.log.Log;
+import pfox.seleniumframework.site.Site;
 
 @CucumberOptions(
         features = "src/test/resources/features",
@@ -31,9 +31,24 @@ public class RunSmokeTest extends AbstractTestNGCucumberTests {
 
     private TestNGCucumberRunner testNGCucumberRunner;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeSuite(alwaysRun = true)
     public void setUpClass() {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
+        if (Environment.executingInBrowserstack()) {
+            Log.Info("Executing in BrowserStack");
+        } else {
+            Log.Info("Executing locally");
+        }
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void tearDownClass() {
+        if (testNGCucumberRunner == null) {
+            return;
+        }
+        testNGCucumberRunner.finish();
+        Site.closeWindow();
+        DriverManager.clearDriver();
     }
 
     @Test(groups = "cucumber parallel", description = "Runs Parallel enabled Scenarios", dataProvider = "parallelScenarios")
@@ -66,14 +81,6 @@ public class RunSmokeTest extends AbstractTestNGCucumberTests {
         }
 
         return filter(testNGCucumberRunner.provideScenarios(), isSerial);
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void tearDownClass() {
-        if (testNGCucumberRunner == null) {
-            return;
-        }
-        testNGCucumberRunner.finish();
     }
 
     private Object[][] filter(Object[][] scenarios, Predicate<Pickle> accept) {

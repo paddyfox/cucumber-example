@@ -10,8 +10,6 @@ public class CommonProperties {
 
     public final static String PROJECT_NAME = "project.name";
 
-    public static final String SCREENSHOT_OFF = "screenshot.off";
-
     public final static String SELENIUM_GRID_URL = "selenium.grid.url";
     public final static String SELENIUM_DRIVER_WAIT_TIMEOUT = "selenium.driver.wait.timeout";
 }
