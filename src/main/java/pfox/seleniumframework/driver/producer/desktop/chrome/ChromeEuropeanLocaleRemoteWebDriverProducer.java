@@ -14,9 +14,6 @@ public class ChromeEuropeanLocaleRemoteWebDriverProducer extends BaseRemoteDrive
     @Override
     public WebDriver produce() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("enableVNC", true);
-        chromeOptions.setCapability("enableVideo", false);
-        chromeOptions.setCapability("env", new String[]{"LANG=pt_PT.UTF-8", "LANGUAGE=pt_PT:en", "LC_ALL=pt_PT.UTF-8"});
         if (browserVersion != null) {
             chromeOptions.setCapability("browserVersion", browserVersion);
         }

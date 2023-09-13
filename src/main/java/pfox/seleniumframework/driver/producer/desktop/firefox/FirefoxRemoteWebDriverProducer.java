@@ -17,9 +17,6 @@ public class FirefoxRemoteWebDriverProducer extends BaseRemoteDriver implements 
     @Override
     public WebDriver produce() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setCapability("enableVNC", true);
-        firefoxOptions.setCapability("enableVideo", false);
-        firefoxOptions.setCapability("name", ProjectEntity.getProjectName);
         firefoxOptions.setCapability("dom.ipc.plugins.enabled.libflashplayer.so", "true");
         firefoxOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         FirefoxProfile firefoxProfile = new FirefoxProfile();

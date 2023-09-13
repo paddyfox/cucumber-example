@@ -19,10 +19,6 @@ public class ChromeRemoteWebDriverProducer extends BaseRemoteDriver implements W
     @Override
     public WebDriver produce() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("enableVNC", true);
-        chromeOptions.setCapability("enableVideo", false);
-        chromeOptions.setCapability("name", ProjectEntity.getProjectName);
-        chromeOptions.setCapability("env", new String[]{"LANG=en_GB.UTF-8", "LANGUAGE=en_GB:en", "LC_ALL=en_GB.UTF-8"});
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--safebrowsing-disable-download-protection");
