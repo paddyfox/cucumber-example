@@ -16,7 +16,7 @@ public class GridUtils {
     public static URL getSeleniumGridURL() {
         String username;
         String accessKey;
-        if (Environment.executingInBrowserstack()) {
+        if (Environment.executingInJenkins()) {
             username = System.getenv("bsUserName");
             accessKey = System.getenv("bsPassword");
         } else {
