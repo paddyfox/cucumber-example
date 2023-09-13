@@ -15,9 +15,6 @@ public class SafariRemoteWebDriverProducer extends BaseRemoteDriver implements W
     @Override
     public WebDriver produce() {
         SafariOptions safariOptions = new SafariOptions();
-        safariOptions.setCapability("enableVNC", true);
-        safariOptions.setCapability("enableVideo", false);
-        safariOptions.setCapability("name", ProjectEntity.getProjectName);
         if (browserVersion != null) {
             safariOptions.setCapability("browserVersion", browserVersion);
         }

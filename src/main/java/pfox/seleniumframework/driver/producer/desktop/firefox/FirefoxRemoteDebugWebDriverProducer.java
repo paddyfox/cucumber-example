@@ -23,9 +23,6 @@ public class FirefoxRemoteDebugWebDriverProducer implements WebDriverProducer {
     @Override
     public WebDriver produce() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setCapability("enableVNC", true);
-        firefoxOptions.setCapability("enableVideo", false);
-        firefoxOptions.setCapability("name", ProjectEntity.getProjectName);
         firefoxOptions.setCapability("dom.ipc.plugins.enabled.libflashplayer.so", "true");
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
         firefoxOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
