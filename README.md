@@ -7,8 +7,8 @@ It is integrated with BrowserStack to run tests on remote browsers and devices.
 ## Getting Started
 
 Have the Cucumber for Java, Gherkin & TestNG plugin installed in IntelliJ.
-Have Java 11 or newer installed.
-Set Project Settings Structure and SDK to: 11
+Have Java 17 or newer installed.
+Set Project Settings Structure and SDK to: 17
 
 ## Tasks
 
