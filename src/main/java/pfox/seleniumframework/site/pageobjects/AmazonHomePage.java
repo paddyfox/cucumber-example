@@ -2,11 +2,10 @@ package pfox.seleniumframework.site.pageobjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pfox.seleniumframework.site.Site;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import pfox.seleniumframework.site.Site;
 
 public class AmazonHomePage extends Site {
 
@@ -17,11 +16,11 @@ public class AmazonHomePage extends Site {
     @FindBy(tagName = "h2") private List<WebElement> searchResults;
 
     public void amazonWebsiteIsDisplayed() {
-        waitForElementToAppear(amazonLogo);
+        waitForElementToAppear(amazonLogo, 20);
     }
 
     public void acceptCookies() {
-        waitForElementToAppear(acceptCookiesButton);
+        waitForElementToAppear(acceptCookiesButton, 20);
         acceptCookiesButton.click();
     }
 
