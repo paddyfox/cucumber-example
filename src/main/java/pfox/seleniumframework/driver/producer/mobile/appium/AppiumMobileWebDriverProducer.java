@@ -1,19 +1,18 @@
 package pfox.seleniumframework.driver.producer.mobile.appium;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
-
-import java.util.HashMap;
-
 import pfox.seleniumframework.driver.GridUtils;
 import pfox.seleniumframework.driver.producer.BaseRemoteDriver;
 import pfox.seleniumframework.driver.producer.WebDriverProducer;
 import pfox.seleniumframework.properties.AppiumMobileProperties;
 import pfox.seleniumframework.properties.PropertyLoader;
+
+import java.util.HashMap;
+
+import static pfox.seleniumframework.properties.AppiumMobileProperties.DEVICE_NAME;
 
 public class AppiumMobileWebDriverProducer extends BaseRemoteDriver implements WebDriverProducer {
 
@@ -22,7 +21,7 @@ public class AppiumMobileWebDriverProducer extends BaseRemoteDriver implements W
         String browserName = PropertyLoader.getProperty(AppiumMobileProperties.BROWSER_NAME);
         String platformName = PropertyLoader.getProperty(AppiumMobileProperties.PLATFORM_NAME);
         String osVersion = PropertyLoader.getProperty(AppiumMobileProperties.OS_VERSION);
-        String deviceName = PropertyLoader.getProperty(AppiumMobileProperties.DEVICE_NAME);
+        String deviceName = PropertyLoader.getProperty(DEVICE_NAME);
         String appiumVersion = PropertyLoader.getProperty(AppiumMobileProperties.APPIUM_VERSION) != null ?
                 PropertyLoader.getProperty(AppiumMobileProperties.APPIUM_VERSION) : "1.17.0";
 
@@ -33,7 +32,7 @@ public class AppiumMobileWebDriverProducer extends BaseRemoteDriver implements W
         browserstackOptions.put("appiumVersion", appiumVersion);
         browserstackOptions.put("local", "true");
 
-        browserstackOptions.put(MobileCapabilityType.DEVICE_NAME, deviceName);
+        browserstackOptions.put("device", deviceName);
         if (osVersion != null) {
             browserstackOptions.put("osVersion", osVersion);
         }
