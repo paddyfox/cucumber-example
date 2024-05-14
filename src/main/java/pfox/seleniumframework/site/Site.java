@@ -22,9 +22,6 @@ import pfox.seleniumframework.properties.PropertyLoader;
 
 import static pfox.seleniumframework.driver.DriverManager.getDriver;
 
-/**
- * Helper class for using the Selenium web driver.
- */
 public class Site {
 
     private static final long DEFAULT_WAIT_TIMEOUT = 15;
@@ -95,8 +92,8 @@ public class Site {
         return getDriver().findElement(by);
     }
 
-    public static void waitForElementToAppear(WebElement element) {
-        webDriverWait().until(ExpectedConditions.visibilityOf(element));
+    public static void waitForElementToAppear(WebElement webElement, int seconds) {
+        webDriverWait(Duration.ofSeconds(seconds)).until(ExpectedConditions.visibilityOf(webElement));
     }
 
     public static boolean verifyPageTitle(String actual, String expected) {
